@@ -1,0 +1,11 @@
+.hoverIcon {
+    cursor: pointer;
+    width: 20px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.hoverIcon:hover {
+    background-color: #444;
+}
