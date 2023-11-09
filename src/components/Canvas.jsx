@@ -1,7 +1,8 @@
 import styles from './Canvas.module.css';
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-export default function Canvas() {
+export default function Canvas({selectedTool}) {
   const topBarHeight = 48;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
@@ -32,14 +33,21 @@ export default function Canvas() {
     setCoordinates({ x: touch.clientX, y: Math.max(touch.clientY, topBarHeight) });
   };
 
+  const canvasClass = selectedTool === 'line' ? styles.horizontalLine : ''
+
   return (
     <div className={styles.canvas}>
       <div
-        className={styles.horizontalLine}
+        className={canvasClass}
         style={{ top: coordinates.y }}
       ></div>
       <p>Mouse/Touch X: {coordinates.x}</p>
       <p>Mouse/Touch Y: {coordinates.y}</p>
+      <p>Tool: {selectedTool}</p>
     </div>
   );
 }
+
+Canvas.propTypes = {
+  selectedTool: PropTypes.string,
+};
