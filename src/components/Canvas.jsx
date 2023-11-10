@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function Canvas({selectedTool}) {
   const topBarHeight = 48;
+  const gridSize = 20;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function Canvas({selectedTool}) {
     <div className={styles.canvas}>
       <div
         className={canvasClass}
-        style={{ top: coordinates.y }}
+        style={{ top: 8 + coordinates.y - coordinates.y % gridSize }}
       ></div>
       <p>Mouse/Touch X: {coordinates.x}</p>
       <p>Mouse/Touch Y: {coordinates.y}</p>

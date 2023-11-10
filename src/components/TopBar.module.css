@@ -4,4 +4,8 @@
     color: #fff;
     padding: 10px 20px;
     height: 28px;
-  }
+}
+
+input[type="radio"] {
+    display: none;
+}
