@@ -6,6 +6,28 @@ export default function Canvas({selectedTool}) {
   const topBarHeight = 48;
   const gridSize = 20;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const [showGrid, ] = useState(true);
+  const data = {
+    rect: {
+      btns: [
+        {x: 1, y: 1, w: 3},
+        {x: 5, y: 1, w: 3},
+        {x: 9, y: 1, w: 3},
+        {x: 18, y: 1, w: 1},
+        {x: 1, y: 5, w: 1},
+        {x: 18, y: 5, w: 1},
+        {x: 17, y: 27, w: 2},
+      ],
+      texts: [
+        {x: 1, y: 3, w: 8},
+        {x: 3, y: 5, w: 8},
+        {x: 3, y: 6, w: 4},
+      ],
+      input: [
+        {x: 1, y: 24, w: 18},
+      ],
+    }
+  }
 
   useEffect(() => {
     const isTouchSupported = 'ontouchstart' in window || navigator.maxTouchPoints;
@@ -34,17 +56,35 @@ export default function Canvas({selectedTool}) {
     setCoordinates({ x: touch.clientX, y: Math.max(touch.clientY, topBarHeight) });
   };
 
-  const canvasClass = selectedTool === 'line' ? styles.horizontalLine : ''
+  const tool = selectedTool === 'line' ? styles.horizontalLine : '';
+  const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
+
+  const renderRectangles = (rectangles, className) => {
+    return rectangles.map((r, i) => (
+      <div
+        key={i}
+        className={`${styles.rect} ${className}`}
+        style={{ 
+          left: r.x * gridSize, 
+          top: 48 + r.y * gridSize, 
+          width: r.w * gridSize, 
+        }}
+      ></div>
+    ));
+  };
 
   return (
-    <div className={styles.canvas}>
+    <div className={canvasClass}>
+      {renderRectangles(data.rect.btns, styles.btn)}
+      {renderRectangles(data.rect.texts, styles.txt)}
+      {renderRectangles(data.rect.input, styles.input)}
       <div
-        className={canvasClass}
+        className={tool}
         style={{ top: 8 + coordinates.y - coordinates.y % gridSize }}
       ></div>
-      <p>Mouse/Touch X: {coordinates.x}</p>
+      {/*<p>Mouse/Touch X: {coordinates.x}</p>
       <p>Mouse/Touch Y: {coordinates.y}</p>
-      <p>Tool: {selectedTool}</p>
+      <p>Tool: {selectedTool}</p>*/}
     </div>
   );
 }
