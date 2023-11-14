@@ -11,21 +11,31 @@ export default function TopBar({onToolChange}) {
          <label>
         <input
           type="radio"
-          value="select"
+          value="text"
           name="radioGroup"
           onChange={handleToolChange}
         />
-        Option 1
+        Text
       </label>
 
       <label>
         <input
           type="radio"
-          value="line"
+          value="button"
           name="radioGroup"
           onChange={handleToolChange}
         />
-        Option 2
+        Button
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          value="other"
+          name="radioGroup"
+          onChange={handleToolChange}
+        />
+        Other
       </label>
     </div>
   )

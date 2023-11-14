@@ -32,18 +32,12 @@ export default function Canvas({selectedTool}) {
   useEffect(() => {
     const isTouchSupported = 'ontouchstart' in window || navigator.maxTouchPoints;
 
-    if (isTouchSupported) {
-      document.addEventListener('touchmove', handleTouchMove);
-    } else {
-      document.addEventListener('mousemove', handleMouseMove);
-    }
+    const handleMove = isTouchSupported ? handleTouchMove : handleMouseMove;
+    const typeOfMove = isTouchSupported ? 'touchmove' : 'mousemove';
+    document.addEventListener(typeOfMove, handleMove);
 
     return () => {
-      if (isTouchSupported) {
-        document.removeEventListener('touchmove', handleTouchMove);
-      } else {
-        document.removeEventListener('mousemove', handleMouseMove);
-      }
+     document.removeEventListener(typeOfMove, handleMove);
     };
   }, []);
 
@@ -56,7 +50,7 @@ export default function Canvas({selectedTool}) {
     setCoordinates({ x: touch.clientX, y: Math.max(touch.clientY, topBarHeight) });
   };
 
-  const tool = selectedTool === 'line' ? styles.horizontalLine : '';
+  const tool = selectedTool === 'line' ? styles.rect : styles.rect;
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
 
   const renderRectangles = (rectangles, className) => {
@@ -80,10 +74,13 @@ export default function Canvas({selectedTool}) {
       {renderRectangles(data.rect.input, styles.input)}
       <div
         className={tool}
-        style={{ top: 8 + coordinates.y - coordinates.y % gridSize }}
+        style={{ 
+          top: coordinates.y - coordinates.y % gridSize + (coordinates.y % 20 >= 8 ? 8 : -gridSize + 8), 
+          left: coordinates.x - coordinates.x % gridSize
+        }}
       ></div>
-      {/*<p>Mouse/Touch X: {coordinates.x}</p>
-      <p>Mouse/Touch Y: {coordinates.y}</p>
+      {/*<p>Mouse/Touch X: {coordinates.x - coordinates.x % gridSize} {coordinates.x} </p>
+      <p>Mouse/Touch Y: {coordinates.y - coordinates.y % gridSize} {coordinates.y} </p>
       <p>Tool: {selectedTool}</p>*/}
     </div>
   );
