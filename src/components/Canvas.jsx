@@ -1,6 +1,7 @@
 import styles from './Canvas.module.css';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import {Btn, Txt, Other} from './canvas/Rectangle';
 
 export default function Canvas({selectedTool}) {
   const topBarHeight = 48;
@@ -53,25 +54,11 @@ export default function Canvas({selectedTool}) {
   const tool = selectedTool === 'line' ? styles.rect : styles.rect;
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
 
-  const renderRectangles = (rectangles, className) => {
-    return rectangles.map((r, i) => (
-      <div
-        key={i}
-        className={`${styles.rect} ${className}`}
-        style={{ 
-          left: r.x * gridSize, 
-          top: 48 + r.y * gridSize, 
-          width: r.w * gridSize, 
-        }}
-      ></div>
-    ));
-  };
-
   return (
     <div className={canvasClass}>
-      {renderRectangles(data.rect.btns, styles.btn)}
-      {renderRectangles(data.rect.texts, styles.txt)}
-      {renderRectangles(data.rect.input, styles.input)}
+      <Btn rectangles={data.rect.btns} />
+      <Txt rectangles={data.rect.texts} />
+      <Other rectangles={data.rect.input} />
       <div
         className={tool}
         style={{ 

@@ -1,0 +1,24 @@
+
+.rect {
+    position: absolute;
+    z-index: -1;
+    border-radius: 10px;
+    background-color: #777; 
+    width: 20px;
+    height: 20px;
+}
+
+.btn {
+    background-color: #377; 
+    height: 20px;
+}
+
+.txt {
+    background-color: #777; 
+    height: 10px;
+}
+
+.other {
+    background-color: #bbb; 
+    height: 40px;
+}
