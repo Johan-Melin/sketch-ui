@@ -11,7 +11,7 @@ const Rectangle = ({ rectangles, style }) => {
       style={{ 
         left: r.x * gridSize, 
         top: topBarHeight + r.y * gridSize, 
-        width: r.w * gridSize, 
+        width: r.w * gridSize || 20, 
       }}
     ></div>
   ));
@@ -23,17 +23,17 @@ export const Other = ({rectangles}) => <Rectangle rectangles={rectangles} style=
 
 const RectPropTypes = {
     rectangles: PropTypes.arrayOf(
-      PropTypes.shape({
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired,
-        w: PropTypes.number.isRequired,
-        h: PropTypes.number,
-      })
+        PropTypes.shape({
+            x: PropTypes.number.isRequired,
+            y: PropTypes.number.isRequired,
+            w: PropTypes.number,
+            h: PropTypes.number,
+        })
     ).isRequired,
-  };
+};
 
-  Btn.propTypes = RectPropTypes;
-  Txt.propTypes = RectPropTypes;
-  Other.propTypes = RectPropTypes;
-  
-  
+Btn.propTypes = RectPropTypes;
+Txt.propTypes = RectPropTypes;
+Other.propTypes = RectPropTypes;
+
+export default Rectangle;

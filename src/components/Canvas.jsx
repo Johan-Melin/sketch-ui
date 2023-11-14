@@ -1,7 +1,7 @@
 import styles from './Canvas.module.css';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {Btn, Txt, Other} from './canvas/Rectangle';
+import Rectangle, {Btn, Txt, Other} from './canvas/Rectangle';
 
 export default function Canvas({selectedTool}) {
   const topBarHeight = 48;
@@ -42,33 +42,33 @@ export default function Canvas({selectedTool}) {
     };
   }, []);
 
+  const setMouseCoords = (event) => {
+      
+  const coordX = Math.floor(event.clientX / gridSize);
+  const coordY = Math.floor((event.clientY - topBarHeight) / gridSize);
+
+    setCoordinates({ x: coordX, y: coordY });
+  }
+
   const handleMouseMove = (event) => {
-    setCoordinates({ x: event.clientX, y: Math.max(event.clientY, topBarHeight) });
+    setMouseCoords(event);
   };
 
   const handleTouchMove = (event) => {
     const touch = event.touches[0]; 
-    setCoordinates({ x: touch.clientX, y: Math.max(touch.clientY, topBarHeight) });
+    setMouseCoords(touch);
   };
 
   const tool = selectedTool === 'line' ? styles.rect : styles.rect;
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
+  selectedTool === 'line' && console.log(tool);
 
   return (
     <div className={canvasClass}>
       <Btn rectangles={data.rect.btns} />
       <Txt rectangles={data.rect.texts} />
       <Other rectangles={data.rect.input} />
-      <div
-        className={tool}
-        style={{ 
-          top: coordinates.y - coordinates.y % gridSize + (coordinates.y % 20 >= 8 ? 8 : -gridSize + 8), 
-          left: coordinates.x - coordinates.x % gridSize
-        }}
-      ></div>
-      {/*<p>Mouse/Touch X: {coordinates.x - coordinates.x % gridSize} {coordinates.x} </p>
-      <p>Mouse/Touch Y: {coordinates.y - coordinates.y % gridSize} {coordinates.y} </p>
-      <p>Tool: {selectedTool}</p>*/}
+      <Rectangle rectangles={[coordinates]}/>
     </div>
   );
 }
