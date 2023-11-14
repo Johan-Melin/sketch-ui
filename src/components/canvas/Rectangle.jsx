@@ -1,6 +1,8 @@
 import styles from './Rectangle.module.css';
-const gridSize = 20;
-const topBarHeight = 48;
+import { CONSTANTS } from '../styles/constants.js';
+
+const topBarHeight = CONSTANTS.TOPBAR_HEIGHT;
+const gridSize = CONSTANTS.GRID_SIZE;
 import PropTypes from 'prop-types';
 
 const Rectangle = ({ rectangles, style }) => {

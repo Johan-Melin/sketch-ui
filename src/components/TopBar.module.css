@@ -1,9 +1,10 @@
 
 .topBar {
+    box-sizing: border-box;
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
-    height: 28px;
+    height: var(--topBarHeight);
 }
 
 input[type="radio"] {

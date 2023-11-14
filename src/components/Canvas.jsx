@@ -2,10 +2,11 @@ import styles from './Canvas.module.css';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Rectangle, {Btn, Txt, Other} from './canvas/Rectangle';
+import { CONSTANTS } from './styles/constants.js';
 
 export default function Canvas({selectedTool}) {
-  const topBarHeight = 48;
-  const gridSize = 20;
+  const topBarHeight = CONSTANTS.TOPBAR_HEIGHT;
+  const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [showGrid, ] = useState(true);
   const data = {
@@ -40,12 +41,13 @@ export default function Canvas({selectedTool}) {
     return () => {
      document.removeEventListener(typeOfMove, handleMove);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setMouseCoords = (event) => {
       
-  const coordX = Math.floor(event.clientX / gridSize);
-  const coordY = Math.floor((event.clientY - topBarHeight) / gridSize);
+    const coordX = Math.floor(event.clientX / gridSize);
+    const coordY = Math.floor((event.clientY - topBarHeight) / gridSize);
 
     setCoordinates({ x: coordX, y: coordY });
   }
