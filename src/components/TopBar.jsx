@@ -12,7 +12,7 @@ export default function TopBar({onToolChange}) {
   
   return (
     <div className={styles.topBar}>
-         <label>
+      <label>
         <input
           type="radio"
           value="text"

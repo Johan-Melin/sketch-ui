@@ -11,6 +11,7 @@ export default function Canvas({selectedTool}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [showGrid, ] = useState(true);
+
   const data = {
     rect: {
       btns: [
@@ -63,16 +64,19 @@ export default function Canvas({selectedTool}) {
     setMouseCoords(touch);
   };
 
-  const tool = selectedTool === 'line' ? styles.rect : styles.rect;
+  const color = selectedTool === 'text' 
+  ? '#777' 
+  : selectedTool === 'button' 
+    ? '#377' 
+    : '#bbb'
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
-  selectedTool === 'line' && console.log(tool);
 
   return (
     <div className={canvasClass}>
       <Btn rectangles={data.rect.btns} />
       <Txt rectangles={data.rect.texts} />
       <Other rectangles={data.rect.input} />
-      <Rectangle rectangles={[coordinates]}/>
+      <Rectangle rectangles={[coordinates]} color={color} />
     </div>
   );
 }

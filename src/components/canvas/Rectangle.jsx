@@ -5,7 +5,7 @@ const topBarHeight = CONSTANTS.TOPBAR_HEIGHT;
 const gridSize = CONSTANTS.GRID_SIZE;
 import PropTypes from 'prop-types';
 
-const Rectangle = ({ rectangles, style }) => {
+const Rectangle = ({ rectangles, style, color }) => {
   return rectangles.map((r, i) => (
     <div
       key={i}
@@ -14,6 +14,7 @@ const Rectangle = ({ rectangles, style }) => {
         left: r.x * gridSize, 
         top: topBarHeight + r.y * gridSize, 
         width: r.w * gridSize || 20, 
+        backgroundColor: color
       }}
     ></div>
   ));
