@@ -1,11 +1,16 @@
+:root {
+    --canvas-bg: #e5e5f5;
+    --grid-color: #d5d5e5;
+}
+
 .canvas {
     flex: 1;
     color: #111;
-    background-color: #e5e5f7;
+    background-color: var(--canvas-bg);
     z-index: -3;
 }
 
 .grid {
-    background-image:  linear-gradient(#d5d5e7 1px, transparent 1px), linear-gradient(to right, #d5d5e7 1px, #e5e5f7 1px);
-    background-size: 20px 20px;
+    background-image:  linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(to right, var(--grid-color) 1px, var(--canvas-bg) 1px);
+    background-size: var(--grid-size) var(--grid-size);
 }

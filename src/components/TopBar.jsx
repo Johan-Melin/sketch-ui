@@ -5,10 +5,11 @@ import { CONSTANTS } from './styles/constants.js';
 
 export default function TopBar({onToolChange}) {
   const root = document.documentElement;
-  root.style.setProperty('--topBarHeight', CONSTANTS.TOPBAR_HEIGHT);
+  root.style.setProperty('--topBarHeight', CONSTANTS.TOPBAR_HEIGHT+'px');
   const handleToolChange = (event) => {
     onToolChange(event.target.value);
   };
+  
   return (
     <div className={styles.topBar}>
          <label>

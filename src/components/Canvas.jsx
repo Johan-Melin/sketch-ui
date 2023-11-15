@@ -5,6 +5,8 @@ import Rectangle, {Btn, Txt, Other} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 
 export default function Canvas({selectedTool}) {
+  const root = document.documentElement;
+  root.style.setProperty('--grid-size', CONSTANTS.GRID_SIZE+'px');
   const topBarHeight = CONSTANTS.TOPBAR_HEIGHT;
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });

@@ -1,24 +1,30 @@
 
+:root {
+    --rect-txt: #777;
+    --rect-btn: #377;
+    --rect-other: #bbb;
+}
+  
 .rect {
     position: absolute;
     z-index: -1;
     border-radius: 10px;
-    background-color: #777; 
-    width: 20px;
-    height: 20px;
+    background-color: var(--rect-txt); 
+    width: var(--grid-size);
+    height: var(--grid-size);
 }
 
 .btn {
-    background-color: #377; 
+    background-color: var(--rect-btn); 
     height: 20px;
 }
 
 .txt {
-    background-color: #777; 
+    background-color: var(--rect-txt); 
     height: 10px;
 }
 
 .other {
-    background-color: #bbb; 
+    background-color: var(--rect-other); 
     height: 40px;
 }
