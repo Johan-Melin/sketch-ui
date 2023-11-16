@@ -12,56 +12,73 @@ export default function Canvas({selectedTool}) {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [showGrid, ] = useState(true);
 
-  const data = {
-    rect: {
-      btns: [
-        {x: 1, y: 1, w: 3},
-        {x: 5, y: 1, w: 3},
-        {x: 9, y: 1, w: 3},
-        {x: 18, y: 1, w: 1},
-        {x: 1, y: 5, w: 1},
-        {x: 18, y: 5, w: 1},
-        {x: 17, y: 27, w: 2},
-      ],
-      texts: [
-        {x: 1, y: 3, w: 8},
-        {x: 3, y: 5, w: 8},
-        {x: 3, y: 6, w: 4},
-      ],
-      input: [
-        {x: 1, y: 24, w: 18},
-      ],
-    }
+  const rect = {
+    btn: [
+      {x: 1, y: 1, w: 3},
+      {x: 5, y: 1, w: 3},
+      {x: 9, y: 1, w: 3},
+      {x: 18, y: 1, w: 1},
+      {x: 1, y: 5, w: 1},
+      {x: 18, y: 5, w: 1},
+      {x: 17, y: 27, w: 2},
+    ],
+    text: [
+      {x: 1, y: 3, w: 8},
+      {x: 3, y: 5, w: 8},
+      {x: 3, y: 6, w: 4},
+    ],
+    other: [
+      {x: 1, y: 24, w: 18},
+    ],
   }
+  const [rectData, setRectData] = useState(rect);
 
   useEffect(() => {
+    console.log("useEffet");
     const isTouchSupported = 'ontouchstart' in window || navigator.maxTouchPoints;
 
     const handleMove = isTouchSupported ? handleTouchMove : handleMouseMove;
     const typeOfMove = isTouchSupported ? 'touchmove' : 'mousemove';
     document.addEventListener(typeOfMove, handleMove);
 
-    return () => {
-     document.removeEventListener(typeOfMove, handleMove);
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const typeOfClick = isTouchSupported ? 'touchend' : 'click';
+    document.addEventListener(typeOfClick, handleClick);
 
-  const setMouseCoords = (event) => {
-      
+    return () => {
+      document.removeEventListener(typeOfMove, handleMove);
+      document.removeEventListener(typeOfClick, handleClick);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTool]);
+
+  const calcCoords = (event) => {
     const coordX = Math.floor(event.clientX / gridSize);
     const coordY = Math.floor((event.clientY - topBarHeight) / gridSize);
-
-    setCoordinates({ x: coordX, y: coordY });
+    return {x: coordX, y: coordY}
   }
 
+  const addRect = (event) => {
+    setRectData(prevState => {
+      return {
+        ...prevState,
+        [selectedTool]: [...prevState[selectedTool], {...calcCoords(event), w: 3}]
+      }
+    });
+  }
+
+  const handleClick = (event) => {
+    if (selectedTool) {
+      addRect(event);
+    }
+  };
+
   const handleMouseMove = (event) => {
-    setMouseCoords(event);
+    setCoordinates({...calcCoords(event)});
   };
 
   const handleTouchMove = (event) => {
     const touch = event.touches[0]; 
-    setMouseCoords(touch);
+    setCoordinates({...calcCoords(touch)});
   };
 
   const color = selectedTool === 'text' 
@@ -73,10 +90,11 @@ export default function Canvas({selectedTool}) {
 
   return (
     <div className={canvasClass}>
-      <Btn rectangles={data.rect.btns} />
-      <Txt rectangles={data.rect.texts} />
-      <Other rectangles={data.rect.input} />
+      <Btn rectangles={rectData.btn} />
+      <Txt rectangles={rectData.text} />
+      <Other rectangles={rectData.other} />
       <Rectangle rectangles={[coordinates]} color={color} />
+      <p>{coordinates.x}</p>
     </div>
   );
 }

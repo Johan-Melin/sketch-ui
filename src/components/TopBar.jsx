@@ -25,7 +25,7 @@ export default function TopBar({onToolChange}) {
       <label>
         <input
           type="radio"
-          value="button"
+          value="btn"
           name="radioGroup"
           onChange={handleToolChange}
         />
