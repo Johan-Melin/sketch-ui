@@ -14,6 +14,7 @@ const Rectangle = ({ rectangles, style, color }) => {
         left: r.x * gridSize, 
         top: topBarHeight + r.y * gridSize, 
         width: r.w * gridSize || 20, 
+        height: r.h * gridSize || 20, 
         backgroundColor: color
       }}
     ></div>
@@ -29,7 +30,7 @@ const RectPropTypes = {
         PropTypes.shape({
             x: PropTypes.number.isRequired,
             y: PropTypes.number.isRequired,
-            w: PropTypes.number,
+            w: PropTypes.number.isRequired,
             h: PropTypes.number,
         })
     ).isRequired,

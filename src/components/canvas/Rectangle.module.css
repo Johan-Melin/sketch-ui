@@ -7,7 +7,7 @@
   
 .rect {
     position: absolute;
-    z-index: -1;
+    z-index: 1;
     border-radius: 10px;
     background-color: var(--rect-txt); 
     width: var(--grid-size);
@@ -17,14 +17,17 @@
 .btn {
     background-color: var(--rect-btn); 
     height: 20px;
+    z-index: 2;
 }
 
 .txt {
     background-color: var(--rect-txt); 
-    height: 10px;
+    height: 20px;
+    z-index: 2;
 }
 
 .other {
     background-color: var(--rect-other); 
     height: 40px;
+    z-index: 1;
 }

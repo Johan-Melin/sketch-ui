@@ -1,8 +1,9 @@
 import styles from './Canvas.module.css';
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Rectangle, {Btn, Txt, Other} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
+import rect from '../rectData.js';
 
 export default function Canvas({selectedTool}) {
   const root = document.documentElement;
@@ -11,30 +12,16 @@ export default function Canvas({selectedTool}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [showGrid, ] = useState(true);
+  //const [drawing, setDrawing] = useState(false);
+  //const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
+  const canvasRef = useRef(null);
 
-  const rect = {
-    btn: [
-      {x: 1, y: 1, w: 3},
-      {x: 5, y: 1, w: 3},
-      {x: 9, y: 1, w: 3},
-      {x: 18, y: 1, w: 1},
-      {x: 1, y: 5, w: 1},
-      {x: 18, y: 5, w: 1},
-      {x: 17, y: 27, w: 2},
-    ],
-    text: [
-      {x: 1, y: 3, w: 8},
-      {x: 3, y: 5, w: 8},
-      {x: 3, y: 6, w: 4},
-    ],
-    other: [
-      {x: 1, y: 24, w: 18},
-    ],
-  }
   const [rectData, setRectData] = useState(rect);
 
   useEffect(() => {
-    console.log("useEffet");
+    const canvasWidth = canvasRef.current.clientWidth;
+    const canvasHeight = canvasRef.current.clientHeight;
+    console.log(canvasWidth, canvasHeight)
     const isTouchSupported = 'ontouchstart' in window || navigator.maxTouchPoints;
 
     const handleMove = isTouchSupported ? handleTouchMove : handleMouseMove;
@@ -89,7 +76,7 @@ export default function Canvas({selectedTool}) {
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
 
   return (
-    <div className={canvasClass}>
+    <div className={canvasClass} ref={canvasRef}>
       <Btn rectangles={rectData.btn} />
       <Txt rectangles={rectData.text} />
       <Other rectangles={rectData.other} />
