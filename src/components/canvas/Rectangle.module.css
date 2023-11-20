@@ -8,7 +8,7 @@
 .rect {
     position: absolute;
     z-index: 1;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: var(--rect-txt); 
     width: var(--grid-size);
     height: var(--grid-size);

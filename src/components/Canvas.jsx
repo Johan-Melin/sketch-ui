@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Rectangle, {Btn, Txt, Other} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
-import rect from '../rectData.js';
+import screens from '../rectData.js';
 
 export default function Canvas({selectedTool, showGrid}) {
   const root = document.documentElement;
@@ -15,7 +15,7 @@ export default function Canvas({selectedTool, showGrid}) {
   //const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
 
-  const [rectData, setRectData] = useState(rect);
+  const [rectData, setRectData] = useState(screens[0]);
 
   useEffect(() => {
     const canvasWidth = canvasRef.current.clientWidth;
@@ -43,13 +43,13 @@ export default function Canvas({selectedTool, showGrid}) {
     return {x: coordX, y: coordY}
   }
 
-  const addRect = (event) => {
-    setRectData(prevState => {
+  const addRect = () => {
+    /*setRectData(prevState => {
       return {
         ...prevState,
         [selectedTool]: [...prevState[selectedTool], {...calcCoords(event), w: 3}]
       }
-    });
+    });*/
   }
 
   const handleClick = (event) => {
