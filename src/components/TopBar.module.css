@@ -5,6 +5,8 @@
     color: #fff;
     padding: 10px 20px;
     height: var(--topBarHeight);
+    display: flex;
+    justify-content: space-between;
 }
 
 input[type="radio"] {

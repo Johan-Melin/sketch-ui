@@ -5,13 +5,12 @@ import Rectangle, {Btn, Txt, Other} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import rect from '../rectData.js';
 
-export default function Canvas({selectedTool}) {
+export default function Canvas({selectedTool, showGrid}) {
   const root = document.documentElement;
   root.style.setProperty('--grid-size', CONSTANTS.GRID_SIZE+'px');
   const topBarHeight = CONSTANTS.TOPBAR_HEIGHT;
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-  const [showGrid, ] = useState(true);
   //const [drawing, setDrawing] = useState(false);
   //const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
@@ -88,4 +87,5 @@ export default function Canvas({selectedTool}) {
 
 Canvas.propTypes = {
   selectedTool: PropTypes.string,
+  showGrid: PropTypes.bool
 };

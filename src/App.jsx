@@ -5,15 +5,21 @@ import Canvas from './components/Canvas'
 
 function App() {
   const [selectedTool, setSelectedTool] = useState(null);
+  const [showGrid, setShowGrid] = useState(false);
 
   const handleToolChange = (value) => {
     setSelectedTool(value);
   };
 
+  const handleShowGridChange = () => {
+    setShowGrid(!showGrid);
+  };
+
+
   return (
     <div className="app">
-      <TopBar onToolChange={handleToolChange} />
-      <Canvas selectedTool={selectedTool} />
+      <TopBar onToolChange={handleToolChange} onShowGridChange={handleShowGridChange} />
+      <Canvas selectedTool={selectedTool} showGrid={showGrid} />
     </div>
   )
 }
