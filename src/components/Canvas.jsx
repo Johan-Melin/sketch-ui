@@ -1,7 +1,7 @@
 import styles from './Canvas.module.css';
 import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Rectangle, {Btn, Txt, Other} from './canvas/Rectangle';
+import Rectangle, {Btn, Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
@@ -79,6 +79,7 @@ export default function Canvas({selectedTool, showGrid}) {
       <Btn rectangles={rectData.btn} />
       <Txt rectangles={rectData.text} />
       <Other rectangles={rectData.other} />
+      <Input rectangles={rectData.input} />
       <Rectangle rectangles={[coordinates]} color={color} />
       <p>{coordinates.x}</p>
     </div>

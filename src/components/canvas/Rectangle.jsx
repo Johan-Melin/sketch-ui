@@ -24,6 +24,7 @@ const Rectangle = ({ rectangles, style, color }) => {
 export const Btn = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.btn} />
 export const Txt = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.txt}/>
 export const Other = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.other}/>
+export const Input = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.input}/>
 
 const RectPropTypes = {
     rectangles: PropTypes.arrayOf(
@@ -39,5 +40,6 @@ const RectPropTypes = {
 Btn.propTypes = RectPropTypes;
 Txt.propTypes = RectPropTypes;
 Other.propTypes = RectPropTypes;
+Input.propTypes = RectPropTypes;
 
 export default Rectangle;

@@ -42,6 +42,16 @@ export default function TopBar({onToolChange, onShowGridChange}) {
           />
           Other
         </label>
+
+        <label>
+          <input
+            type="radio"
+            value="input"
+            name="radioGroup"
+            onChange={handleToolChange}
+          />
+          Input
+        </label>
       </div>
 
       <span onClick={onShowGridChange}>Grid</span>

@@ -9,7 +9,6 @@
     position: absolute;
     z-index: 1;
     border-radius: 5px;
-    background-color: var(--rect-txt); 
     width: var(--grid-size);
     height: var(--grid-size);
 }
@@ -28,6 +27,14 @@
 
 .other {
     background-color: var(--rect-other); 
+    height: 40px;
+    z-index: 1;
+}
+
+.input {
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--rect-txt);
     height: 40px;
     z-index: 1;
 }
