@@ -1,8 +1,8 @@
 
 :root {
-    --rect-txt: #777;
+    --rect-txt: #bbb;
     --rect-btn: #377;
-    --rect-other: #bbb;
+    --rect-other: #999;
 }
   
 .rect {
@@ -20,9 +20,12 @@
 }
 
 .txt {
-    background-color: var(--rect-txt); 
     height: 20px;
     z-index: 2;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+    font-weight: 700;
 }
 
 .other {
