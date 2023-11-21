@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const loremIpsumText = `lorem ipsum dolor sit amet, consectetur adipiscing elit. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`.split(' ');
 
-const Rectangle = ({ rectangles, style, color, displayLorem }) => {
+const Rectangle = ({ rectangles, style, color, displayLorem, clickHandler }) => {
   return rectangles.map((r, i) => (
     <div
       key={i}
@@ -18,16 +18,18 @@ const Rectangle = ({ rectangles, style, color, displayLorem }) => {
         width: r.w * gridSize || 20, 
         height: r.h * gridSize || 20, 
         fontSize: r.h * gridSize * 0.8 || 20,
-        backgroundColor: color
+        backgroundColor: color,
+        border: r.link && '2px solid green',
       }}
+      onClick={r.link ? ()=>clickHandler(r.link) : undefined}
     >{displayLorem  && i < loremIpsumText.length && `${loremIpsumText.slice(i).join(' ')}`}</div>
   ));
 };
 
 export const Btn = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.btn} />
-export const Txt = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.txt} displayLorem ></Rectangle>
-export const Other = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.other}/>
-export const Input = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.input}/>
+export const Txt = ({rectangles, clickHandler}) => <Rectangle rectangles={rectangles} style={styles.txt} displayLorem clickHandler={clickHandler} />
+export const Other = ({rectangles, clickHandler}) => <Rectangle rectangles={rectangles} style={styles.other} clickHandler={clickHandler} />
+export const Input = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.input} />
 
 const RectPropTypes = {
   rectangles: PropTypes.arrayOf(
@@ -38,11 +40,11 @@ const RectPropTypes = {
       h: PropTypes.number,
     })
   ).isRequired,
+  clickHandler: PropTypes.func
 };
 
-
 Btn.propTypes = RectPropTypes;
-Txt.propTypes = RectPropTypes,
+Txt.propTypes = RectPropTypes;
 Other.propTypes = RectPropTypes;
 Input.propTypes = RectPropTypes;
 

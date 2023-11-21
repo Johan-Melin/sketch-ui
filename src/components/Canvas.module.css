@@ -7,7 +7,7 @@
     flex: 1;
     color: #111;
     background-color: var(--canvas-bg);
-    z-index: -3;
+    z-index: 0;
     overflow: hidden;
 }
 

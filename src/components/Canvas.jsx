@@ -15,7 +15,12 @@ export default function Canvas({selectedTool, showGrid}) {
   //const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
 
-  const [rectData, setRectData] = useState(screens[0]);
+  const [currentScreen, setCurrentScreen] = useState(0);
+  const [rectData, setRectData] = useState(screens[currentScreen]);
+
+  useEffect(() => {
+    setRectData(screens[currentScreen]);
+  }, [currentScreen]);
 
   useEffect(() => {
     const canvasWidth = canvasRef.current.clientWidth;
@@ -76,11 +81,11 @@ export default function Canvas({selectedTool, showGrid}) {
 
   return (
     <div className={canvasClass} ref={canvasRef}>
-      <Btn rectangles={rectData.btn} />
-      <Txt rectangles={rectData.text} />
-      <Other rectangles={rectData.other} />
-      <Input rectangles={rectData.input} />
-      <Rectangle rectangles={[coordinates]} color={color} />
+      <Btn rectangles={rectData.btn || []} />
+      <Txt rectangles={rectData.text || []} clickHandler={setCurrentScreen} />
+      <Other rectangles={rectData.other || []} clickHandler={setCurrentScreen} />
+      <Input rectangles={rectData.input || []} />
+      {/*<Rectangle rectangles={[coordinates]} color={color} />*/}
       <p>{coordinates.x}</p>
     </div>
   );
