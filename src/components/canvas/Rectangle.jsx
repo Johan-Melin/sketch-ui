@@ -1,7 +1,6 @@
 import styles from './Rectangle.module.css';
 import { CONSTANTS } from '../styles/constants.js';
 
-const topBarHeight = CONSTANTS.TOPBAR_HEIGHT;
 const gridSize = CONSTANTS.GRID_SIZE;
 import PropTypes from 'prop-types';
 
@@ -14,7 +13,7 @@ const Rectangle = ({ rectangles, style, color, displayLorem, clickHandler }) => 
       className={`${styles.rect} ${style}`}
       style={{ 
         left: r.x * gridSize, 
-        top: topBarHeight + r.y * gridSize, 
+        top: CONSTANTS.TOPBAR_HEIGHT + r.y * gridSize, 
         width: r.w * gridSize || 20, 
         height: r.h * gridSize || 20, 
         fontSize: r.h * gridSize * 0.8 || 20,

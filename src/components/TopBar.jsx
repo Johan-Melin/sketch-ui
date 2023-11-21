@@ -4,14 +4,12 @@ import PropTypes from 'prop-types';
 import { CONSTANTS } from './styles/constants.js';
 
 export default function TopBar({onToolChange, onShowGridChange}) {
-  const root = document.documentElement;
-  root.style.setProperty('--topBarHeight', CONSTANTS.TOPBAR_HEIGHT+'px');
   const handleToolChange = (event) => {
     onToolChange(event.target.value);
   };
   
   return (
-    <div className={styles.topBar}>
+    <div className={styles.topBar} style={{ height: `${CONSTANTS.TOPBAR_HEIGHT}px` }}>
       <div>
         <label>
           <input

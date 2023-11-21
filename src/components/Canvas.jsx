@@ -6,9 +6,6 @@ import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
 export default function Canvas({selectedTool, showGrid}) {
-  const root = document.documentElement;
-  root.style.setProperty('--grid-size', CONSTANTS.GRID_SIZE+'px');
-  const topBarHeight = CONSTANTS.TOPBAR_HEIGHT;
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   //const [drawing, setDrawing] = useState(false);
@@ -23,28 +20,27 @@ export default function Canvas({selectedTool, showGrid}) {
   }, [currentScreen]);
 
   useEffect(() => {
-    const canvasWidth = canvasRef.current.clientWidth;
-    const canvasHeight = canvasRef.current.clientHeight;
-    console.log(canvasWidth, canvasHeight)
+    const canvas = canvasRef.current;
+    console.log(canvas.clientWidth, canvas.clientHeight)
     const isTouchSupported = 'ontouchstart' in window || navigator.maxTouchPoints;
 
     const handleMove = isTouchSupported ? handleTouchMove : handleMouseMove;
     const typeOfMove = isTouchSupported ? 'touchmove' : 'mousemove';
-    document.addEventListener(typeOfMove, handleMove);
+    canvas.addEventListener(typeOfMove, handleMove);
 
     const typeOfClick = isTouchSupported ? 'touchend' : 'click';
-    document.addEventListener(typeOfClick, handleClick);
+    canvas.addEventListener(typeOfClick, handleClick);
 
     return () => {
-      document.removeEventListener(typeOfMove, handleMove);
-      document.removeEventListener(typeOfClick, handleClick);
+      canvas.removeEventListener(typeOfMove, handleMove);
+      canvas.removeEventListener(typeOfClick, handleClick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTool]);
 
   const calcCoords = (event) => {
     const coordX = Math.floor(event.clientX / gridSize);
-    const coordY = Math.floor((event.clientY - topBarHeight) / gridSize);
+    const coordY = Math.floor((event.clientY - CONSTANTS.TOPBAR_HEIGHT) / gridSize);
     return {x: coordX, y: coordY}
   }
 
@@ -86,7 +82,7 @@ export default function Canvas({selectedTool, showGrid}) {
       <Other rectangles={rectData.other || []} clickHandler={setCurrentScreen} />
       <Input rectangles={rectData.input || []} />
       {/*<Rectangle rectangles={[coordinates]} color={color} />*/}
-      <p>{coordinates.x}</p>
+      <p>{coordinates.y}</p>
     </div>
   );
 }
