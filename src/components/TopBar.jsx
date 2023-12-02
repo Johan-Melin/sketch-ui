@@ -11,13 +11,15 @@ export default function TopBar({onToolChange, onShowGridChange}) {
   return (
     <div className={styles.topBar} style={{ height: `${CONSTANTS.TOPBAR_HEIGHT}px` }}>
       <div>
-        <HoverIcon value="new" handleToolChange={handleToolChange} />
         <HoverIcon value="text" handleToolChange={handleToolChange} />
         <HoverIcon value="other" handleToolChange={handleToolChange} />
         <HoverIcon value="input" handleToolChange={handleToolChange} />
       </div>
 
-      <span onClick={onShowGridChange}>Grid</span>
+      <div>
+        <HoverIcon value="clear" handleToolChange={handleToolChange} />
+      </div>
+      {/*<span onClick={onShowGridChange}>Grid</span>*/}
     </div>
   )
 }

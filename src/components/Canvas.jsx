@@ -20,6 +20,9 @@ export default function Canvas({selectedTool, showGrid}) {
   }, [currentScreen]);
 
   useEffect(() => {
+    if(selectedTool === "clear"){
+      setRectData([]);
+    }
     const canvas = canvasRef.current;
     console.log(canvas.clientWidth, canvas.clientHeight)
     const isTouchSupported = 'ontouchstart' in window || navigator.maxTouchPoints;
