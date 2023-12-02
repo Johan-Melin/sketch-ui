@@ -1,6 +1,6 @@
 import styles from './TopBar.module.css'
 import PropTypes from 'prop-types';
-//import HoverIcon from './topbar/HoverIcon'
+import HoverIcon from './topbar/HoverIcon'
 import { CONSTANTS } from './styles/constants.js';
 
 export default function TopBar({onToolChange, onShowGridChange}) {
@@ -11,45 +11,10 @@ export default function TopBar({onToolChange, onShowGridChange}) {
   return (
     <div className={styles.topBar} style={{ height: `${CONSTANTS.TOPBAR_HEIGHT}px` }}>
       <div>
-        <label>
-          <input
-            type="radio"
-            value="text"
-            name="radioGroup"
-            onChange={handleToolChange}
-          />
-          Text
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            value="btn"
-            name="radioGroup"
-            onChange={handleToolChange}
-          />
-          Button
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            value="other"
-            name="radioGroup"
-            onChange={handleToolChange}
-          />
-          Other
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            value="input"
-            name="radioGroup"
-            onChange={handleToolChange}
-          />
-          Input
-        </label>
+        <HoverIcon value="new" handleToolChange={handleToolChange} />
+        <HoverIcon value="text" handleToolChange={handleToolChange} />
+        <HoverIcon value="other" handleToolChange={handleToolChange} />
+        <HoverIcon value="input" handleToolChange={handleToolChange} />
       </div>
 
       <span onClick={onShowGridChange}>Grid</span>

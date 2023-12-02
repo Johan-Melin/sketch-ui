@@ -1,14 +1,21 @@
 import styles from './HoverIcon.module.css'
 import PropTypes from 'prop-types';
 
-export default function HoverIcon({text}) {
+export default function HoverIcon({value, handleToolChange}) {
   return (
-    <div className={styles.hoverIcon}>
-        {text}
-    </div>
+    <label> {/* className={styles.hoverIcon}*/}
+      <input
+        type="radio"
+        value={value}
+        name="radioGroup"
+        onChange={handleToolChange}
+      />
+      {value}
+  </label>
   )
 }
 
 HoverIcon.propTypes = {
-    text: PropTypes.string.isRequired, 
+  value: PropTypes.string.isRequired, 
+  handleToolChange: PropTypes.func.isRequired
 };
