@@ -81,7 +81,7 @@ export default function Canvas({selectedTool, showGrid}) {
     setRectData(prevState => {
       return {
         ...prevState,
-        [selectedTool]: [...prevState[selectedTool], 
+        [selectedTool]: [...prevState[selectedTool] || [], 
         { x: drawRef.current.x, y: drawRef.current.y, w: coordRef.current.x - drawRef.current.x, h: coordRef.current.y - drawRef.current.y }
       ]}
     });
@@ -89,18 +89,29 @@ export default function Canvas({selectedTool, showGrid}) {
 
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
 
+  const renderShape = () => {
+    const shapeProps = {
+      rectangles: [{ x: drawStart.x, y: drawStart.y, w: coordinates.x - drawStart.x, h: coordinates.y - drawStart.y }],
+    };
+
+    switch (selectedTool) {
+      case 'text':
+        return <Txt {...shapeProps} />;
+      case 'other':
+        return <Other {...shapeProps} />;
+      case 'input':
+        return <Input {...shapeProps} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={canvasClass} ref={canvasRef}>
       <Txt rectangles={rectData.text || []} clickHandler={setCurrentScreen} />
       <Other rectangles={rectData.other || []} clickHandler={setCurrentScreen} />
       <Input rectangles={rectData.input || []} />
-      {drawing && (
-        selectedTool === 'text' && <Txt rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} /> ||
-        selectedTool === 'other' && <Other rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} /> ||
-        selectedTool === 'input' && <Input rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} />
-      )}
-      <p>{drawStart.y}</p>
-      <p>{coordinates.y}</p>
+      {drawing && renderShape()}
     </div>
   );
 }
