@@ -9,8 +9,18 @@ export default function Canvas({selectedTool, showGrid}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [drawing, setDrawing] = useState(false);
-  const [drawStart, setDrawStart] = useState({ x: 2, y: 2 });
+  const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
+  const coordRef = useRef(coordinates);
+  const drawRef = useRef(drawStart);
+
+  useEffect(() => {
+    coordRef.current = coordinates;
+  });
+
+  useEffect(() => {
+    drawRef.current = drawStart;
+  });
 
   const [currentScreen, setCurrentScreen] = useState(0);
   const [rectData, setRectData] = useState(screens[currentScreen]);
@@ -37,13 +47,16 @@ export default function Canvas({selectedTool, showGrid}) {
     };
 
     const handleDown = (event) => {
+      setDrawing(true);
       const moveEvent = isTouchSupported ? event.touches[0] : event;
       setDrawStart({...calcCoords(moveEvent)})
-      console.log("down");
     };
     
-    const handleUp = (event) => {
-      console.log("up");
+    const handleUp = () => {
+      setDrawing(false);
+      if (selectedTool){
+        addRect();
+      }
     };
 
     canvas.addEventListener(typeOfMove, handleMove);
@@ -65,19 +78,15 @@ export default function Canvas({selectedTool, showGrid}) {
   }
 
   const addRect = () => {
-    /*setRectData(prevState => {
+    setRectData(prevState => {
       return {
         ...prevState,
-        [selectedTool]: [...prevState[selectedTool], {...calcCoords(event), w: 3}]
-      }
-    });*/
+        [selectedTool]: [...prevState[selectedTool], 
+        { x: drawRef.current.x, y: drawRef.current.y, w: coordRef.current.x - drawRef.current.x, h: coordRef.current.y - drawRef.current.y }
+      ]}
+    });
   }
 
-  const color = selectedTool === 'text' 
-  ? '#777' 
-  : selectedTool === 'button' 
-    ? '#377' 
-    : '#bbb'
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
 
   return (
@@ -85,7 +94,11 @@ export default function Canvas({selectedTool, showGrid}) {
       <Txt rectangles={rectData.text || []} clickHandler={setCurrentScreen} />
       <Other rectangles={rectData.other || []} clickHandler={setCurrentScreen} />
       <Input rectangles={rectData.input || []} />
-      <Rectangle rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} color={color} />
+      {drawing && (
+        selectedTool === 'text' && <Txt rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} /> ||
+        selectedTool === 'other' && <Other rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} /> ||
+        selectedTool === 'input' && <Input rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} />
+      )}
       <p>{drawStart.y}</p>
       <p>{coordinates.y}</p>
     </div>
