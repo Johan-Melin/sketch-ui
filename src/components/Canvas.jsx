@@ -9,7 +9,7 @@ export default function Canvas({selectedTool, showGrid}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [drawing, setDrawing] = useState(false);
-  const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
+  const [drawStart, setDrawStart] = useState({ x: 2, y: 2 });
   const canvasRef = useRef(null);
 
   const [currentScreen, setCurrentScreen] = useState(0);
@@ -25,18 +25,35 @@ export default function Canvas({selectedTool, showGrid}) {
     }
     const canvas = canvasRef.current;
     console.log(canvas.clientWidth, canvas.clientHeight)
+
     const isTouchSupported = 'ontouchstart' in window || navigator.maxTouchPoints;
+    const [typeOfMove, typeOfUp, typeOfDown] = isTouchSupported 
+      ? ['touchmove', 'touchend', 'touchstart']
+      : ['mousemove', 'mouseup', 'mousedown'];
 
-    const handleMove = isTouchSupported ? handleTouchMove : handleMouseMove;
-    const typeOfMove = isTouchSupported ? 'touchmove' : 'mousemove';
+    const handleMove = (event) => {
+      const moveEvent = isTouchSupported ? event.touches[0] : event;
+      setCoordinates({ ...calcCoords(moveEvent) });
+    };
+
+    const handleDown = (event) => {
+      const moveEvent = isTouchSupported ? event.touches[0] : event;
+      setDrawStart({...calcCoords(moveEvent)})
+      console.log("down");
+    };
+    
+    const handleUp = (event) => {
+      console.log("up");
+    };
+
     canvas.addEventListener(typeOfMove, handleMove);
-
-    const typeOfClick = isTouchSupported ? 'touchend' : 'click';
-    canvas.addEventListener(typeOfClick, handleClick);
+    canvas.addEventListener(typeOfUp, handleUp);
+    canvas.addEventListener(typeOfDown, handleDown);
 
     return () => {
       canvas.removeEventListener(typeOfMove, handleMove);
-      canvas.removeEventListener(typeOfClick, handleClick);
+      canvas.removeEventListener(typeOfUp, handleUp);
+      canvas.removeEventListener(typeOfDown, handleDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTool]);
@@ -56,21 +73,6 @@ export default function Canvas({selectedTool, showGrid}) {
     });*/
   }
 
-  const handleClick = (event) => {
-    if (selectedTool) {
-      addRect(event);
-    }
-  };
-
-  const handleMouseMove = (event) => {
-    setCoordinates({...calcCoords(event)});
-  };
-
-  const handleTouchMove = (event) => {
-    const touch = event.touches[0]; 
-    setCoordinates({...calcCoords(touch)});
-  };
-
   const color = selectedTool === 'text' 
   ? '#777' 
   : selectedTool === 'button' 
@@ -83,7 +85,8 @@ export default function Canvas({selectedTool, showGrid}) {
       <Txt rectangles={rectData.text || []} clickHandler={setCurrentScreen} />
       <Other rectangles={rectData.other || []} clickHandler={setCurrentScreen} />
       <Input rectangles={rectData.input || []} />
-      <Rectangle rectangles={[coordinates]} color={color} />
+      <Rectangle rectangles={[{x: drawStart.x, y: drawStart.y, w: coordinates.x-drawStart.x, h: coordinates.y-drawStart.y}]} color={color} />
+      <p>{drawStart.y}</p>
       <p>{coordinates.y}</p>
     </div>
   );
