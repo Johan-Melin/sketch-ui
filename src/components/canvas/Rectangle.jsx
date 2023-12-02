@@ -18,14 +18,13 @@ const Rectangle = ({ rectangles, style, color, displayLorem, clickHandler }) => 
         height: r.h * gridSize || 20, 
         fontSize: r.h * gridSize * 0.8 || 20,
         backgroundColor: color,
-        border: r.link && '2px solid green',
+        border: r.link && '2px solid #377',
       }}
       onClick={r.link ? ()=>clickHandler(r.link) : undefined}
     >{displayLorem  && i < loremIpsumText.length && `${loremIpsumText.slice(i).join(' ')}`}</div>
   ));
 };
 
-export const Btn = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.btn} />
 export const Txt = ({rectangles, clickHandler}) => <Rectangle rectangles={rectangles} style={styles.txt} displayLorem clickHandler={clickHandler} />
 export const Other = ({rectangles, clickHandler}) => <Rectangle rectangles={rectangles} style={styles.other} clickHandler={clickHandler} />
 export const Input = ({rectangles}) => <Rectangle rectangles={rectangles} style={styles.input} />
@@ -42,7 +41,6 @@ const RectPropTypes = {
   clickHandler: PropTypes.func
 };
 
-Btn.propTypes = RectPropTypes;
 Txt.propTypes = RectPropTypes;
 Other.propTypes = RectPropTypes;
 Input.propTypes = RectPropTypes;

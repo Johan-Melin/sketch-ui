@@ -1,7 +1,6 @@
 
 :root {
     --rect-txt: #bbb;
-    --rect-btn: #377;
     --rect-other: #999;
 }
   
@@ -11,12 +10,6 @@
     border-radius: 5px;
     width: var(--grid-size);
     height: var(--grid-size);
-}
-
-.btn {
-    background-color: var(--rect-btn); 
-    height: 20px;
-    z-index: 2;
 }
 
 .txt {

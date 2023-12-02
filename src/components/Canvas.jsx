@@ -1,15 +1,15 @@
 import styles from './Canvas.module.css';
 import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Rectangle, {Btn, Txt, Other, Input} from './canvas/Rectangle';
+import Rectangle, {Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
 export default function Canvas({selectedTool, showGrid}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-  //const [drawing, setDrawing] = useState(false);
-  //const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
+  const [drawing, setDrawing] = useState(false);
+  const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
 
   const [currentScreen, setCurrentScreen] = useState(0);
@@ -77,11 +77,10 @@ export default function Canvas({selectedTool, showGrid}) {
 
   return (
     <div className={canvasClass} ref={canvasRef}>
-      <Btn rectangles={rectData.btn || []} />
       <Txt rectangles={rectData.text || []} clickHandler={setCurrentScreen} />
       <Other rectangles={rectData.other || []} clickHandler={setCurrentScreen} />
       <Input rectangles={rectData.input || []} />
-      {/*<Rectangle rectangles={[coordinates]} color={color} />*/}
+      <Rectangle rectangles={[coordinates]} color={color} />
       <p>{coordinates.y}</p>
     </div>
   );
