@@ -12,14 +12,14 @@ export default function Canvas({selectedTool, showGrid}) {
   const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
   const coordRef = useRef(coordinates);
-  const drawRef = useRef(drawStart);
+  const drawStartRef = useRef(drawStart);
 
   useEffect(() => {
     coordRef.current = coordinates;
   });
 
   useEffect(() => {
-    drawRef.current = drawStart;
+    drawStartRef.current = drawStart;
   });
 
   const [currentScreen, setCurrentScreen] = useState(0);
@@ -79,10 +79,11 @@ export default function Canvas({selectedTool, showGrid}) {
 
   const addRect = () => {
     setRectData(prevState => {
+      const {x, y} = drawStartRef.current;
       return {
         ...prevState,
         [selectedTool]: [...prevState[selectedTool] || [], 
-        { x: drawRef.current.x, y: drawRef.current.y, w: coordRef.current.x - drawRef.current.x, h: coordRef.current.y - drawRef.current.y }
+        { x, y, w: coordRef.current.x - x, h: coordRef.current.y - y }
       ]}
     });
   }
@@ -90,8 +91,9 @@ export default function Canvas({selectedTool, showGrid}) {
   const canvasClass = styles.canvas + (showGrid ? ' ' + styles.grid : '');
 
   const renderShape = () => {
+    const {x, y} = drawStart;
     const shapeProps = {
-      rectangles: [{ x: drawStart.x, y: drawStart.y, w: coordinates.x - drawStart.x, h: coordinates.y - drawStart.y }],
+      rectangles: [{ x, y, w: coordinates.x - x, h: coordinates.y - y }],
     };
 
     switch (selectedTool) {
