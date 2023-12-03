@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import HoverIcon from './topbar/HoverIcon'
 import { CONSTANTS } from './styles/constants.js';
 
-export default function TopBar({onToolChange, onShowGridChange}) {
+export default function TopBar({onToolChange, /*onShowGridChange*/}) {
   const handleToolChange = (event) => {
     onToolChange(event.target.value);
   };

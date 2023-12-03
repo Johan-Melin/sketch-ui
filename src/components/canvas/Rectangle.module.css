@@ -1,6 +1,6 @@
 
 :root {
-    --rect-txt: #bbb;
+    --rect-txt: #555;
     --rect-other: #999;
 }
   
@@ -18,7 +18,8 @@
     overflow: hidden;
     text-overflow: clip;
     white-space: nowrap;
-    font-weight: 700;
+    font-weight: 600;
+    color: var(--rect-txt);
 }
 
 .other {

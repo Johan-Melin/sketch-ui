@@ -1,7 +1,7 @@
 import styles from './Canvas.module.css';
 import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Rectangle, {Txt, Other, Input} from './canvas/Rectangle';
+import {Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
@@ -59,9 +59,9 @@ export default function Canvas({selectedTool, showGrid}) {
       }
     };
 
-    canvas.addEventListener(typeOfMove, handleMove);
-    canvas.addEventListener(typeOfUp, handleUp);
-    canvas.addEventListener(typeOfDown, handleDown);
+    canvas.addEventListener(typeOfMove, handleMove, { passive: true });
+    canvas.addEventListener(typeOfUp, handleUp, { passive: true });
+    canvas.addEventListener(typeOfDown, handleDown, { passive: true });
 
     return () => {
       canvas.removeEventListener(typeOfMove, handleMove);

@@ -1,4 +1,4 @@
-import styles from './HoverIcon.module.css'
+//import styles from './HoverIcon.module.css'
 import PropTypes from 'prop-types';
 
 export default function HoverIcon({value, handleToolChange}) {

@@ -15,7 +15,7 @@ const Rectangle = ({ rectangles, style, color, displayLorem, clickHandler }) => 
         left: r.x * gridSize, 
         top: CONSTANTS.TOPBAR_HEIGHT + r.y * gridSize, 
         width: r.w * gridSize || 20, 
-        height: r.h * gridSize || 20, 
+        height: r.h * gridSize || 2, 
         fontSize: r.h * gridSize * 0.8 || 20,
         backgroundColor: color,
         border: r.link && '2px solid #377',
