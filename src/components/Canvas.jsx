@@ -7,23 +7,24 @@ import screens from '../rectData.js';
 
 export default function Canvas({selectedTool, showGrid}) {
   const gridSize = CONSTANTS.GRID_SIZE;
+  const [currentScreen, setCurrentScreen] = useState(0);
+  const [rectData, setRectData] = useState(screens[currentScreen]);
+
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [drawing, setDrawing] = useState(false);
   const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
   const coordRef = useRef(coordinates);
   const drawStartRef = useRef(drawStart);
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
     coordRef.current = coordinates;
-  });
+  }, [coordinates]);
 
   useEffect(() => {
     drawStartRef.current = drawStart;
-  });
-
-  const [currentScreen, setCurrentScreen] = useState(0);
-  const [rectData, setRectData] = useState(screens[currentScreen]);
+  }, [drawStart]);
 
   useEffect(() => {
     setRectData(screens[currentScreen]);
@@ -32,6 +33,9 @@ export default function Canvas({selectedTool, showGrid}) {
   useEffect(() => {
     if(selectedTool === "clear"){
       setRectData([]);
+    }
+    if(selectedTool === "undo"){
+      undoAction();
     }
     const canvas = canvasRef.current;
     console.log(canvas.clientWidth, canvas.clientHeight)
@@ -77,13 +81,32 @@ export default function Canvas({selectedTool, showGrid}) {
     return {x: coordX, y: coordY}
   }
 
+  const undoAction = () => {
+    if (currentIndex < 0) return;
+    console.log(currentIndex);
+    setRectData((prevState) => {
+      const updatedText = prevState.text?.filter((item) => item.index !== currentIndex) || [];
+      const updatedOther = prevState.other?.filter((item) => item.index !== currentIndex) || [];
+      const updatedInput = prevState.input?.filter((item) => item.index !== currentIndex) || [];
+    
+      return {
+        text: updatedText,
+        other: updatedOther,
+        input: updatedInput,
+      };
+    });
+    setCurrentIndex(currentIndex -1);
+  }
+
   const addRect = () => {
+    console.log("add", currentIndex);
+    setCurrentIndex(currentIndex + 1);
     setRectData(prevState => {
       const {x, y} = drawStartRef.current;
       return {
         ...prevState,
         [selectedTool]: [...prevState[selectedTool] || [], 
-        { x, y, w: coordRef.current.x - x, h: coordRef.current.y - y }
+        { x, y, w: coordRef.current.x - x, h: coordRef.current.y - y, index: currentIndex }
       ]}
     });
   }

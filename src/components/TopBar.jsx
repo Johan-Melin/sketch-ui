@@ -17,6 +17,7 @@ export default function TopBar({onToolChange, /*onShowGridChange*/}) {
       </div>
 
       <div>
+        <HoverIcon value="undo" handleToolChange={handleToolChange} />
         <HoverIcon value="clear" handleToolChange={handleToolChange} />
       </div>
       {/*<span onClick={onShowGridChange}>Grid</span>*/}
