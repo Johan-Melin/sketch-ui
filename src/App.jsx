@@ -15,9 +15,12 @@ function App() {
     setShowGrid(!showGrid);
   };
 
+  const handleTouchStart = (event) => {
+    event.preventDefault();
+  };
 
   return (
-    <div className="app">
+    <div className="app" onTouchStart={handleTouchStart}>
       <TopBar onToolChange={handleToolChange} onShowGridChange={handleShowGridChange} />
       <Canvas selectedTool={selectedTool} showGrid={showGrid} />
     </div>
