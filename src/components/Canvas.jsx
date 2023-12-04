@@ -63,9 +63,9 @@ export default function Canvas({selectedTool, showGrid}) {
       }
     };
 
-    canvas.addEventListener(typeOfMove, handleMove, { passive: true });
-    canvas.addEventListener(typeOfUp, handleUp, { passive: true });
-    canvas.addEventListener(typeOfDown, handleDown, { passive: true });
+    canvas.addEventListener(typeOfMove, handleMove);
+    canvas.addEventListener(typeOfUp, handleUp);
+    canvas.addEventListener(typeOfDown, handleDown);
 
     return () => {
       canvas.removeEventListener(typeOfMove, handleMove);
