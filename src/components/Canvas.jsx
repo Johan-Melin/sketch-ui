@@ -46,17 +46,20 @@ export default function Canvas({selectedTool, showGrid}) {
       : ['mousemove', 'mouseup', 'mousedown'];
 
     const handleMove = (event) => {
+      event.preventDefault();
       const moveEvent = isTouchSupported ? event.touches[0] : event;
       setCoordinates({ ...calcCoords(moveEvent) });
     };
 
     const handleDown = (event) => {
+      event.preventDefault();
       setDrawing(true);
       const moveEvent = isTouchSupported ? event.touches[0] : event;
       setDrawStart({...calcCoords(moveEvent)})
     };
     
     const handleUp = () => {
+      event.preventDefault();
       setDrawing(false);
       if (selectedTool){
         addRect();
