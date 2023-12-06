@@ -16,10 +16,10 @@ export default function TopBar({onToolChange, /*onShowGridChange*/}) {
         event.preventDefault();
       };
   
-      currentRef.addEventListener('touchstart', handleTouchStart, { passive: false });
+      currentRef.addEventListener('touchmove', handleTouchStart);
   
       return () => {
-        currentRef.removeEventListener('touchstart', handleTouchStart);
+        currentRef.removeEventListener('touchmove', handleTouchStart);
       };
     }
   }, []);

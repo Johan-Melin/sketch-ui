@@ -52,23 +52,21 @@ export default function Canvas({selectedTool, showGrid}) {
     };
 
     const handleDown = (event) => {
-      event.preventDefault();
       setDrawing(true);
       const moveEvent = isTouchSupported ? event.touches[0] : event;
       setDrawStart({...calcCoords(moveEvent)})
     };
     
     const handleUp = () => {
-      event.preventDefault();
       setDrawing(false);
       if (selectedTool){
         addRect();
       }
     };
 
-    canvas.addEventListener(typeOfMove, handleMove, { passive: false });
-    canvas.addEventListener(typeOfUp, handleUp, { passive: false });
-    canvas.addEventListener(typeOfDown, handleDown, { passive: false });
+    canvas.addEventListener(typeOfMove, handleMove);
+    canvas.addEventListener(typeOfUp, handleUp);
+    canvas.addEventListener(typeOfDown, handleDown);
 
     return () => {
       canvas.removeEventListener(typeOfMove, handleMove);
