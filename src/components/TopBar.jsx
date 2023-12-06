@@ -4,7 +4,7 @@ import HoverIcon from './topbar/HoverIcon'
 import { CONSTANTS } from './styles/constants.js';
 import { useRef, useEffect } from 'react';
 
-export default function TopBar({onToolChange, /*onShowGridChange*/}) {
+export default function TopBar({onToolChange, onShowGridChange}) {
   const topBarRef = useRef(null);
 
   //prevent refresh page on swipe
@@ -39,8 +39,8 @@ export default function TopBar({onToolChange, /*onShowGridChange*/}) {
       <div>
         <HoverIcon value="undo" handleToolChange={handleToolChange} />
         <HoverIcon value="clear" handleToolChange={handleToolChange} />
+        <span onClick={onShowGridChange}>grid</span>
       </div>
-      {/*<span onClick={onShowGridChange}>Grid</span>*/}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 :root {
     --canvas-bg: #e5e5f5;
     --grid-color: #d5d5e5;
+    --grid-size: 20px;
 }
 
 .canvas {
