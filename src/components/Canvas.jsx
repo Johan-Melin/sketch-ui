@@ -77,8 +77,8 @@ export default function Canvas({selectedTool, showGrid}) {
   }, [selectedTool]);
 
   const calcCoords = (event) => {
-    const coordX = Math.floor(event.clientX / gridSize);
-    const coordY = Math.floor((event.clientY - CONSTANTS.TOPBAR_HEIGHT) / gridSize);
+    const coordX = Math.floor((event.clientX + gridSize / 2) / gridSize);
+    const coordY = Math.floor((event.clientY + gridSize / 2 - CONSTANTS.TOPBAR_HEIGHT) / gridSize);
     return {x: coordX, y: coordY}
   }
 
@@ -100,7 +100,6 @@ export default function Canvas({selectedTool, showGrid}) {
   }
 
   const addRect = () => {
-    console.log("add", currentIndex);
     setCurrentIndex(currentIndex + 1);
     setRectData(prevState => {
       const {x, y} = drawStartRef.current;
