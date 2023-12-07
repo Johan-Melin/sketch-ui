@@ -5,7 +5,7 @@ import {Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
-export default function Canvas({selectedTool}) {
+export default function Canvas({selectedTool, selectedAction}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [currentScreen, setCurrentScreen] = useState(0);
   const [rectData, setRectData] = useState(screens[currentScreen]);
@@ -22,32 +22,26 @@ export default function Canvas({selectedTool}) {
 
   useEffect(() => {
     coordRef.current = coordinates;
-  }, [coordinates]);
-
-  useEffect(() => {
     drawStartRef.current = drawStart;
-  }, [drawStart]);
-
-  useEffect(() => {
     toolRef.current = selectedTool;
-  }, [selectedTool]);
+  }, [coordinates, drawStart, selectedTool]);
 
   useEffect(() => {
     setRectData(screens[currentScreen]);
   }, [currentScreen]);
 
   useEffect(() => {
-    if(selectedTool === "clear"){
+    if(selectedAction === "clear"){
       setRectData([]);
     }
-    if(selectedTool === "undo"){
+    if(selectedAction === "undo"){
       undoAction();
     }
-    if(selectedTool === "toggleGrid"){
+    if(selectedAction === "toggleGrid"){
       setShowGrid(grid => !grid);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTool]);
+  }, [selectedAction]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -157,5 +151,6 @@ export default function Canvas({selectedTool}) {
 
 Canvas.propTypes = {
   selectedTool: PropTypes.string,
+  selectedAction: PropTypes.string,
   showGrid: PropTypes.bool
 };
