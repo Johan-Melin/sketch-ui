@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="app">
-      <TopBar onToolChange={handleToolChange} onShowGridChange={handleShowGridChange} />
+      <TopBar selectedTool={selectedTool} onToolChange={handleToolChange} onShowGridChange={handleShowGridChange} />
       <Canvas selectedTool={selectedTool} showGrid={showGrid} />
     </div>
   )

@@ -4,7 +4,7 @@ import HoverIcon from './topbar/HoverIcon'
 import { CONSTANTS } from './styles/constants.js';
 import { useRef, useEffect } from 'react';
 
-export default function TopBar({onToolChange, onShowGridChange}) {
+export default function TopBar({selectedTool, onToolChange, onShowGridChange}) {
   const topBarRef = useRef(null);
 
   //prevent refresh page on swipe
@@ -24,16 +24,17 @@ export default function TopBar({onToolChange, onShowGridChange}) {
     }
   }, []);
 
-  const handleToolChange = (event) => {
-    onToolChange(event.target.value);
+  const handleToolChange = (str) => {
+    console.log(str);
+    onToolChange(str);
   };
   
   return (
     <div className={styles.topBar} ref={topBarRef} style={{ height: `${CONSTANTS.TOPBAR_HEIGHT}px` }}>
       <div>
-        <HoverIcon value="text" handleToolChange={handleToolChange} />
-        <HoverIcon value="other" handleToolChange={handleToolChange} />
-        <HoverIcon value="input" handleToolChange={handleToolChange} />
+        <HoverIcon value="text" selectedTool={selectedTool} handleToolChange={handleToolChange} />
+        <HoverIcon value="other" selectedTool={selectedTool} handleToolChange={handleToolChange} />
+        <HoverIcon value="input" selectedTool={selectedTool} handleToolChange={handleToolChange} />
       </div>
 
       <div>
@@ -48,4 +49,5 @@ export default function TopBar({onToolChange, onShowGridChange}) {
 TopBar.propTypes = {
   onToolChange: PropTypes.func.isRequired,
   onShowGridChange: PropTypes.func.isRequired,
+  selectedTool: PropTypes.string
 };

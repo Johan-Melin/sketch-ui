@@ -16,6 +16,7 @@ export default function Canvas({selectedTool, showGrid}) {
   const canvasRef = useRef(null);
   const coordRef = useRef(coordinates);
   const drawStartRef = useRef(drawStart);
+  const toolRef = useRef(selectedTool);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
@@ -27,6 +28,10 @@ export default function Canvas({selectedTool, showGrid}) {
   }, [drawStart]);
 
   useEffect(() => {
+    toolRef.current = selectedTool;
+  }, [selectedTool]);
+
+  useEffect(() => {
     setRectData(screens[currentScreen]);
   }, [currentScreen]);
 
@@ -35,6 +40,7 @@ export default function Canvas({selectedTool, showGrid}) {
       setRectData([]);
     }
     if(selectedTool === "undo"){
+      console.log("undoAction");
       undoAction();
     }
     const canvas = canvasRef.current;
@@ -59,7 +65,7 @@ export default function Canvas({selectedTool, showGrid}) {
     
     const handleUp = () => {
       setDrawing(false);
-      if (selectedTool){
+      if (toolRef.current){
         addRect();
       }
     };
@@ -74,7 +80,7 @@ export default function Canvas({selectedTool, showGrid}) {
       canvas.removeEventListener(typeOfDown, handleDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTool]);
+  }, []);
 
   const calcCoords = (event) => {
     const coordX = Math.floor((event.clientX + gridSize / 2) / gridSize);
@@ -100,12 +106,13 @@ export default function Canvas({selectedTool, showGrid}) {
   }
 
   const addRect = () => {
+    const tool = toolRef.current;
     setCurrentIndex(currentIndex + 1);
     setRectData(prevState => {
       const {x, y} = drawStartRef.current;
       return {
         ...prevState,
-        [selectedTool]: [...prevState[selectedTool] || [], 
+        [tool]: [...prevState[tool] || [], 
         { x, y, w: coordRef.current.x - x, h: coordRef.current.y - y, index: currentIndex }
       ]}
     });
