@@ -5,10 +5,11 @@ import {Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
-export default function Canvas({selectedTool, showGrid}) {
+export default function Canvas({selectedTool}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [currentScreen, setCurrentScreen] = useState(0);
   const [rectData, setRectData] = useState(screens[currentScreen]);
+  const [showGrid, setShowGrid] = useState(false);
 
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [drawing, setDrawing] = useState(false);
@@ -40,9 +41,15 @@ export default function Canvas({selectedTool, showGrid}) {
       setRectData([]);
     }
     if(selectedTool === "undo"){
-      console.log("undoAction");
       undoAction();
     }
+    if(selectedTool === "toggleGrid"){
+      setShowGrid(grid => !grid);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTool]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     console.log(canvas.clientWidth, canvas.clientHeight)
 

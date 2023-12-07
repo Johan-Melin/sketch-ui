@@ -9,6 +9,6 @@ export default function HoverIcon({selectedTool, value, handleToolChange}) {
 
 HoverIcon.propTypes = {
   value: PropTypes.string.isRequired, 
-  handleToolChange: PropTypes.string.isRequired,
+  handleToolChange: PropTypes.func.isRequired,
   selectedTool: PropTypes.string
 };
