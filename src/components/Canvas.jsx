@@ -5,11 +5,12 @@ import {Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
-export default function Canvas({selectedTool, selectedAction}) {
+export default function Canvas({selectedTool, selectedAction, setSelectedAction}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const [currentScreen, setCurrentScreen] = useState(0);
   const [rectData, setRectData] = useState(screens[currentScreen]);
   const [showGrid, setShowGrid] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [drawing, setDrawing] = useState(false);
@@ -18,13 +19,14 @@ export default function Canvas({selectedTool, selectedAction}) {
   const coordRef = useRef(coordinates);
   const drawStartRef = useRef(drawStart);
   const toolRef = useRef(selectedTool);
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const indexRef = useRef(currentIndex);
 
   useEffect(() => {
     coordRef.current = coordinates;
     drawStartRef.current = drawStart;
     toolRef.current = selectedTool;
-  }, [coordinates, drawStart, selectedTool]);
+    indexRef.current = currentIndex;
+  }, [coordinates, drawStart, selectedTool, currentIndex]);
 
   useEffect(() => {
     setRectData(screens[currentScreen]);
@@ -40,6 +42,7 @@ export default function Canvas({selectedTool, selectedAction}) {
     if(selectedAction === "toggleGrid"){
       setShowGrid(grid => !grid);
     }
+    setSelectedAction(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAction]);
 
@@ -90,8 +93,8 @@ export default function Canvas({selectedTool, selectedAction}) {
   }
 
   const undoAction = () => {
+    console.log(currentIndex, indexRef.current);
     if (currentIndex < 0) return;
-    console.log(currentIndex);
     setRectData((prevState) => {
       const updatedText = prevState.text?.filter((item) => item.index !== currentIndex) || [];
       const updatedOther = prevState.other?.filter((item) => item.index !== currentIndex) || [];
@@ -103,18 +106,20 @@ export default function Canvas({selectedTool, selectedAction}) {
         input: updatedInput,
       };
     });
-    setCurrentIndex(currentIndex -1);
+    setCurrentIndex(prevState => prevState -1);
   }
 
   const addRect = () => {
     const tool = toolRef.current;
-    setCurrentIndex(currentIndex + 1);
+    const newIndex = indexRef.current +1;
+    setCurrentIndex(newIndex);
+    console.log(currentIndex, indexRef.current);
     setRectData(prevState => {
       const {x, y} = drawStartRef.current;
       return {
         ...prevState,
         [tool]: [...prevState[tool] || [], 
-        { x, y, w: coordRef.current.x - x, h: coordRef.current.y - y, index: currentIndex }
+        { x, y, w: coordRef.current.x - x, h: coordRef.current.y - y, index: newIndex }
       ]}
     });
   }
@@ -152,5 +157,5 @@ export default function Canvas({selectedTool, selectedAction}) {
 Canvas.propTypes = {
   selectedTool: PropTypes.string,
   selectedAction: PropTypes.string,
-  showGrid: PropTypes.bool
+  setSelectedAction: PropTypes.func,
 };
