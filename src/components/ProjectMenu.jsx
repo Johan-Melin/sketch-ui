@@ -1,12 +1,15 @@
 import styles from './ProjectMenu.module.css';
 import data from '../rectData.js';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const ProjectMenu = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
+const ProjectMenu = ({selectedProject, setSelectedProject, setSelectedScreen}) => {
 
   const handleProjectClick = (projectId) => {
     setSelectedProject(projectId);
+  };
+
+  const handleScreenClick = () => {
+    setSelectedScreen(1);
   };
 
   const handleBackClick = () => {
@@ -29,14 +32,20 @@ const ProjectMenu = () => {
       ) : (
         <>
           <button onClick={handleBackClick}>Back</button>
-          <RectList projectId={selectedProject} />
+          <RectList projectId={selectedProject} handleScreenClick={handleScreenClick} />
         </>
       )}
     </div>
   );
 };
 
-const RectList = ({ projectId }) => {
+ProjectMenu.propTypes = {
+  selectedProject: PropTypes.string,
+  setSelectedProject: PropTypes.func,
+  setSelectedScreen: PropTypes.func,
+};
+
+const RectList = ({ projectId, handleScreenClick }) => {
   const project = data.find((item) => item.id === projectId);
 
   return (
@@ -44,7 +53,7 @@ const RectList = ({ projectId }) => {
       <h3>{project.name}:</h3>
       <div>
         {project.rect.map((rect, index) => (
-          <div className={styles.item} key={index}>{rect.name}</div>
+          <div className={styles.item} key={index} onClick={handleScreenClick}>{rect.name}</div>
         ))}
       </div>
     </div>
@@ -52,3 +61,9 @@ const RectList = ({ projectId }) => {
 };
 
 export default ProjectMenu;
+
+
+RectList.propTypes = {
+  projectId: PropTypes.string,
+  handleScreenClick: PropTypes.func,
+};

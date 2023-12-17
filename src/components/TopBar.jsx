@@ -27,6 +27,7 @@ export default function TopBar({selectedTool, onToolChange, onActionChange}) {
   return (
     <div className={styles.topBar} ref={topBarRef} style={{ height: `${CONSTANTS.TOPBAR_HEIGHT}px` }}>
       <div>
+        <HoverIcon value="back" handleToolChange={onActionChange} />
         <HoverIcon value="text" selectedTool={selectedTool} handleToolChange={onToolChange} />
         <HoverIcon value="other" selectedTool={selectedTool} handleToolChange={onToolChange} />
         <HoverIcon value="input" selectedTool={selectedTool} handleToolChange={onToolChange} />
@@ -35,7 +36,7 @@ export default function TopBar({selectedTool, onToolChange, onActionChange}) {
       <div>
         <HoverIcon value="undo" handleToolChange={onActionChange} />
         <HoverIcon value="clear" handleToolChange={onActionChange} />
-        <HoverIcon value="toggleGrid" handleToolChange={onActionChange} />
+        <HoverIcon value="grid" handleToolChange={onActionChange} />
       </div>
     </div>
   )

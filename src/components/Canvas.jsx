@@ -5,7 +5,7 @@ import {Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
-export default function Canvas({selectedTool, selectedAction, setSelectedAction}) {
+export default function Canvas({selectedTool, selectedAction, setSelectedAction, setSelectedScreen}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const currentProject = 0;
   const [currentScreen, setCurrentScreen] = useState(0);
@@ -34,6 +34,9 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction}
   }, [currentScreen]);
 
   useEffect(() => {
+    if(selectedAction === "back"){
+      setSelectedScreen(null);
+    }
     if(selectedAction === "clear"){
       setRectData([]);
     }
@@ -159,4 +162,5 @@ Canvas.propTypes = {
   selectedTool: PropTypes.string,
   selectedAction: PropTypes.string,
   setSelectedAction: PropTypes.func,
+  setSelectedScreen: PropTypes.func,
 };
