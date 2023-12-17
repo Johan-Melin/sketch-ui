@@ -5,6 +5,7 @@ const data = [
     rect: [
     {
       name: "sign in",
+      id: "HahH",
       text: [
         {x: 5, y: 0.5, w: 10, h: 1.5},
         {x: 5, y: 3.5, w: 10, h: 2},
@@ -28,6 +29,7 @@ const data = [
     },
     {
       name: "product list",
+      id: "Lkoi",
       text: [
         {x: 5, y: 0.5, w: 10, h: 1.5},
         {x: 1, y: 13, w: 3, h: 1}, 

@@ -12,11 +12,18 @@ function App() {
 
   return (
     <div className="app">
-      {!selectedScreen
+      {selectedScreen === null 
       ? <ProjectMenu selectedProject={selectedProject} setSelectedProject={setSelectedProject} setSelectedScreen={setSelectedScreen} />
       : <>
         <TopBar selectedTool={selectedTool} onToolChange={setSelectedTool} onActionChange={setSelectedAction} />
-        <Canvas selectedTool={selectedTool} selectedAction={selectedAction} setSelectedAction={setSelectedAction} setSelectedScreen={setSelectedScreen} />
+        <Canvas 
+          selectedTool={selectedTool} 
+          selectedAction={selectedAction} 
+          setSelectedAction={setSelectedAction} 
+          setSelectedScreen={setSelectedScreen} 
+          selectedProject={selectedProject}
+          selectedScreen={selectedScreen}
+        />
       </>
       }
     </div>

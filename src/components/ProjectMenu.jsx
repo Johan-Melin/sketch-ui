@@ -8,8 +8,8 @@ const ProjectMenu = ({selectedProject, setSelectedProject, setSelectedScreen}) =
     setSelectedProject(projectId);
   };
 
-  const handleScreenClick = () => {
-    setSelectedScreen(1);
+  const handleScreenClick = (index) => {
+    setSelectedScreen(index);
   };
 
   const handleBackClick = () => {
@@ -53,7 +53,7 @@ const RectList = ({ projectId, handleScreenClick }) => {
       <h3>{project.name}:</h3>
       <div>
         {project.rect.map((rect, index) => (
-          <div className={styles.item} key={index} onClick={handleScreenClick}>{rect.name}</div>
+          <div className={styles.item} key={index} onClick={() => handleScreenClick(index)}>{rect.name}</div>
         ))}
       </div>
     </div>

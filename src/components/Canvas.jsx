@@ -5,11 +5,10 @@ import {Txt, Other, Input} from './canvas/Rectangle';
 import { CONSTANTS } from './styles/constants.js';
 import screens from '../rectData.js';
 
-export default function Canvas({selectedTool, selectedAction, setSelectedAction, setSelectedScreen}) {
+export default function Canvas({selectedTool, selectedAction, setSelectedAction, setSelectedScreen, selectedProject, selectedScreen}) {
   const gridSize = CONSTANTS.GRID_SIZE;
-  const currentProject = 0;
-  const [currentScreen, setCurrentScreen] = useState(0);
-  const [rectData, setRectData] = useState(screens[currentProject].rect[currentScreen]);
+  const project = screens.find((item) => item.id === selectedProject);
+  const [rectData, setRectData] = useState(project.rect[selectedScreen]);
   const [showGrid, setShowGrid] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
@@ -30,8 +29,8 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction,
   }, [coordinates, drawStart, selectedTool, currentIndex]);
 
   useEffect(() => {
-    setRectData(screens[currentProject].rect[currentScreen]);
-  }, [currentScreen]);
+    setRectData(project.rect[selectedScreen]);
+  }, [selectedScreen, project.rect]);
 
   useEffect(() => {
     if(selectedAction === "back"){
@@ -150,8 +149,8 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction,
 
   return (
     <div className={canvasClass} ref={canvasRef}>
-      <Txt rectangles={rectData.text || []} clickHandler={setCurrentScreen} />
-      <Other rectangles={rectData.other || []} clickHandler={setCurrentScreen} />
+      <Txt rectangles={rectData.text || []} clickHandler={setSelectedScreen} />
+      <Other rectangles={rectData.other || []} clickHandler={setSelectedScreen} />
       <Input rectangles={rectData.input || []} />
       {drawing && renderShape()}
     </div>
@@ -163,4 +162,6 @@ Canvas.propTypes = {
   selectedAction: PropTypes.string,
   setSelectedAction: PropTypes.func,
   setSelectedScreen: PropTypes.func,
+  selectedProject: PropTypes.string,
+  selectedScreen: PropTypes.number,
 };
