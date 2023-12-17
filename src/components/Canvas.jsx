@@ -7,8 +7,9 @@ import screens from '../rectData.js';
 
 export default function Canvas({selectedTool, selectedAction, setSelectedAction}) {
   const gridSize = CONSTANTS.GRID_SIZE;
+  const currentProject = 0;
   const [currentScreen, setCurrentScreen] = useState(0);
-  const [rectData, setRectData] = useState(screens[currentScreen]);
+  const [rectData, setRectData] = useState(screens[currentProject].rect[currentScreen]);
   const [showGrid, setShowGrid] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
@@ -29,7 +30,7 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction}
   }, [coordinates, drawStart, selectedTool, currentIndex]);
 
   useEffect(() => {
-    setRectData(screens[currentScreen]);
+    setRectData(screens[currentProject].rect[currentScreen]);
   }, [currentScreen]);
 
   useEffect(() => {
