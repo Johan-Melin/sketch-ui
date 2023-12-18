@@ -24,7 +24,12 @@ const ProjectMenu = ({selectedProject, setSelectedProject, setSelectedScreen}) =
           <div>
             {data.map((project) => (
               <div className={styles.item} key={project.id} onClick={() => handleProjectClick(project.id)}>
-                {project.name}
+                <span>
+                  {project.name} 
+                </span>
+                <span className={styles.info}>
+                  {project.rect.length} pages
+                </span>
               </div>
             ))}
           </div>

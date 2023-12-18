@@ -57,25 +57,4 @@ const data = [
   }
 ]
 
-// todo app:
-/*const rect = {
-    btn: [
-      {x: 1, y: 1, w: 3},
-      {x: 5, y: 1, w: 3},
-      {x: 9, y: 1, w: 3},
-      {x: 18, y: 1, w: 1},
-      {x: 1, y: 5, w: 1},
-      {x: 18, y: 5, w: 1},
-      {x: 17, y: 27, w: 2},
-    ],
-    text: [
-      {x: 1, y: 3, w: 8},
-      {x: 3, y: 5, w: 8},
-      {x: 3, y: 6, w: 4},
-    ],
-    other: [
-      {x: 1, y: 24, w: 18},
-    ],
-  }*/
-
-  export default data;
+export default data;

@@ -4,4 +4,11 @@
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    font-size: 14px;
+    color: #ccc;
 }
