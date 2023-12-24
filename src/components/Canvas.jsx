@@ -8,13 +8,18 @@ import screens from '../rectData.js';
 export default function Canvas({selectedTool, selectedAction, setSelectedAction, setSelectedScreen, selectedProject, selectedScreen}) {
   const gridSize = CONSTANTS.GRID_SIZE;
   const project = screens.find((item) => item.id === selectedProject);
+  
   const [rectData, setRectData] = useState(project.rect[selectedScreen]);
-  const [showGrid, setShowGrid] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [canvasState, setCanvasState] = useState({
+    showGrid: false,
+    drawing: false,
+    currentIndex: -1,
+    coordinates: { x: 0, y: 0 },
+    drawStart: { x: 0, y: 0 },
+  })
 
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-  const [drawing, setDrawing] = useState(false);
-  const [drawStart, setDrawStart] = useState({ x: 0, y: 0 });
+  const { showGrid, drawing, currentIndex, coordinates, drawStart } = canvasState;
+
   const canvasRef = useRef(null);
   const coordRef = useRef(coordinates);
   const drawStartRef = useRef(drawStart);
@@ -42,8 +47,8 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction,
     if(selectedAction === "undo"){
       undoAction();
     }
-    if(selectedAction === "toggleGrid"){
-      setShowGrid(grid => !grid);
+    if(selectedAction === "grid") {
+      setCanvasState(prevState => ({...prevState, showGrid: !prevState.showGrid }))
     }
     setSelectedAction(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,17 +66,17 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction,
     const handleMove = (event) => {
       event.preventDefault();
       const moveEvent = isTouchSupported ? event.touches[0] : event;
-      setCoordinates({ ...calcCoords(moveEvent) });
+      setCanvasState(prevState => ({...prevState, coordinates: calcCoords(moveEvent) }))
     };
 
     const handleDown = (event) => {
-      setDrawing(true);
+      setCanvasState(prevState => ({...prevState, drawing: true }))
       const moveEvent = isTouchSupported ? event.touches[0] : event;
-      setDrawStart({...calcCoords(moveEvent)})
+      setCanvasState(prevState => ({...prevState, drawStart: calcCoords(moveEvent) }))
     };
     
     const handleUp = () => {
-      setDrawing(false);
+      setCanvasState(prevState => ({...prevState, drawing: false }))
       if (toolRef.current){
         addRect();
       }
@@ -96,7 +101,6 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction,
   }
 
   const undoAction = () => {
-    console.log(currentIndex, indexRef.current);
     if (currentIndex < 0) return;
     setRectData((prevState) => {
       const updatedText = prevState.text?.filter((item) => item.index !== currentIndex) || [];
@@ -109,14 +113,13 @@ export default function Canvas({selectedTool, selectedAction, setSelectedAction,
         input: updatedInput,
       };
     });
-    setCurrentIndex(prevState => prevState -1);
+    setCanvasState(prevState => ({...prevState, currentIndex: prevState.currentIndex -1 }))
   }
 
   const addRect = () => {
     const tool = toolRef.current;
     const newIndex = indexRef.current +1;
-    setCurrentIndex(newIndex);
-    console.log(currentIndex, indexRef.current);
+    setCanvasState(prevState => ({...prevState, currentIndex: newIndex }))
     setRectData(prevState => {
       const {x, y} = drawStartRef.current;
       return {
